@@ -6,7 +6,7 @@ tailored for the flat assembler. With fasm-ant you can build a tree of source fi
 alone those that have not changed since the last build. Being an Ant project, fasm-ant is of
 course built with ~~Ant~~ Maven itself.
 
-### System Requirements
+### System requirements
 
 You need Java 8 and Ant 1.7 or later to use fasm-ant. It has only been tested on Windows, but
 with Java's old promise "write once, run anywhere" it might just work on Linux as well. :-)
@@ -80,6 +80,26 @@ below lists all available fasm-ant parameters.
   </tr>
 </table>
 
+### Parameters specified as nested elements
+
+##### compilerarg
+
+You can specify additional command line arguments for the compiler with nested <compilerarg>
+elements. The <compilerarg> element has exactly one attribute.
+
+<table>
+  <tr>
+    <th>Attribute</th>
+    <th>Description</th>
+    <th>Required</th>
+  </tr>
+  <tr>
+    <td>value</td>
+    <td>a single command-line argument; can contain space characters</td>
+    <td>Yes</td>
+  </tr>
+</table>
+
 ### Example
 
 The following is an example of a very simple build file that uses fasm-ant.
@@ -98,7 +118,9 @@ The following is an example of a very simple build file that uses fasm-ant.
         </target>
 
         <target name="build" depends="declare">
-            <fasm srcdir="${src.dir}" destdir="${bin.dir}" includes="**/*.asm"/>
+            <fasm srcdir="${src.dir}" destdir="${bin.dir}" includes="**/*.asm">
+                <compilerarg value="-d name=value"/>
+            </fasm>
         </target>
     </project>
 
