@@ -4,7 +4,7 @@
 
     <groupId>se.dykstrom.ant.fasm</groupId>
     <artifactId>fasm-ant</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.1-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -12,7 +12,7 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/dykstrom/fasm-ant.git</developerConnection>
-      <tag>fasm-ant-0.3.0</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <build>
