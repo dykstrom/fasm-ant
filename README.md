@@ -34,9 +34,9 @@ below lists all available fasm-ant parameters.
 
 <table>
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th align="left">Attribute</th>
+    <th align="left">Description</th>
+    <th align="left">Required</th>
   </tr>
   <tr>
     <td>compiler</td>
@@ -84,14 +84,15 @@ below lists all available fasm-ant parameters.
 
 ##### compilerarg
 
-You can specify additional command line arguments for the compiler with nested <compilerarg>
-elements. The <compilerarg> element has exactly one attribute.
+You can specify additional command line arguments for the compiler with nested
+&lt;compilerarg&gt; elements. The &lt;compilerarg&gt; element has exactly one
+attribute.
 
 <table>
   <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Required</th>
+    <th align="left">Attribute</th>
+    <th align="left">Description</th>
+    <th align="left">Required</th>
   </tr>
   <tr>
     <td>value</td>
