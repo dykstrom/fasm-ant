@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--suppress XmlUnboundNsPrefix -->
+<project name="fasm-ant" default="build" basedir=".">
+
+    <!-- Properties -->
+    <property name="src.dir" value="src"/>
+    <property name="bin.dir" value="target"/>
+
+    <property name="src.main.java.dir" value="${src.dir}/main/java"/>
+    <property name="src.test.asm.dir" value="${src.dir}/test/asm"/>
+
+    <property name="bin.main.java.dir" value="${bin.dir}/classes"/>
+    <property name="bin.test.asm.dir" value="${bin.dir}/test-binaries"/>
+
+    <property name="dist.dir" value="${bin.dir}/dist"/>
+    <property name="app.jar" value="${dist.dir}/fasm-ant.jar"/>
+
+    <path id="project.class.path">
+        <pathelement location="${bin.main.java.dir}"/>
+    </path>
+
+    <!-- Targets -->
+    <target name="build">
+        <mkdir dir="${bin.main.java.dir}"/>
+        <javac srcdir="${src.main.java.dir}" destdir="${bin.main.java.dir}" debug="on" deprecation="on">
+            <classpath refid="project.class.path"/>
+        </javac>
+    </target>
+
+    <target name="declare" depends="build">
+        <taskdef name="fasm" classname="se.dykstrom.ant.fasm.Fasm">
+            <classpath refid="project.class.path"/>
+        </taskdef>
+    </target>
+
+    <target name="test" depends="declare">
+        <fasm srcdir="${src.test.asm.dir}" destdir="${bin.test.asm.dir}" includes="**/*.asm"/>
+    </target>
+
+    <target name="test-memory-passes" depends="declare">
+        <fasm srcdir="${src.test.asm.dir}" destdir="${bin.test.asm.dir}" memory="100000" passes="10"/>
+    </target>
+
+    <target name="test-error-updated" depends="declare">
+        <fasm srcdir="${src.test.asm.dir}"
+              destdir="${bin.test.asm.dir}"
+              failonerror="false"
+              errorproperty="error"
+              updatedproperty="updated"/>
+        <!--suppress AntResolveInspection -->
+        <echo message="error=${error}, updated=${updated}"/>
+    </target>
+
+    <target name="test-compiler-arg" depends="declare">
+        <fasm srcdir="${src.test.asm.dir}" destdir="${bin.test.asm.dir}">
+            <compilerarg value="-d name=value"/>
+        </fasm>
+    </target>
+
+    <target name="jar" depends="clean, build">
+        <jar destfile="${app.jar}" basedir="${bin.main.java.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="se.dykstrom.ant.fasm.Fasm"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="dist" depends="jar">
+        <zip destfile="${dist.dir}/src.zip">
+            <fileset dir="${src.main.java.dir}"/>
+        </zip>
+    </target>
+
+    <target name="clean">
+        <delete includeemptydirs="true" failonerror="false">
+            <fileset dir="${bin.dir}"/>
+        </delete>
+    </target>
+</project>
