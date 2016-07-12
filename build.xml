@@ -23,11 +23,14 @@
     </target>
 
     <target name="test" depends="declare">
-        <fasm srcdir="${src.test.asm.dir}" destdir="${bin.test.asm.dir}" includes="**/*.asm"/>
+        <fasm srcdir="${src.test.asm.dir}" destdir="${bin.test.asm.dir}"/>
     </target>
 
-    <target name="test-subdir" depends="declare">
-        <fasm srcdir="${src.test.asm.dir}" destdir="${bin.test.asm.dir}" includes="foo/**/*.asm"/>
+    <target name="test-includes-excludes" depends="declare">
+        <fasm srcdir="${src.test.asm.dir}"
+              destdir="${bin.test.asm.dir}"
+              includes="foo/**/*.asm"
+              excludes="**/bar/*.asm"/>
     </target>
 
     <target name="test-memory-passes" depends="declare">
@@ -54,6 +57,7 @@
         <fasm srcdir="${src.test.asm.dir}"
               destdir="${bin.test.asm.dir}"
               includes="**/*.asm"
+              excludes="**/*.tmp"
               memory="100000"
               passes="10"
               failonerror="false"

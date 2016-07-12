@@ -73,6 +73,22 @@ public class TestFasm {
     }
 
     @Test
+    public void testExecute_Includes() throws Exception {
+        // Remove destination file to force a recompile
+        Files.deleteIfExists(DEST_PATH);
+
+        // Set includes to something that does not match the removed file
+        fasm.setIncludes("does-not-exist.tmp");
+
+        // Test
+        fasm.execute();
+
+        // Expect no errors and no file updated
+        assertNull(project.getProperty(ERROR_PROPERTY));
+        assertNull(project.getProperty(UPDATED_PROPERTY));
+    }
+
+    @Test
     public void testExecute_BuildError() throws Exception {
         // Remove destination file to force a recompile
         Files.deleteIfExists(DEST_PATH);

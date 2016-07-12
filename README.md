@@ -54,8 +54,20 @@ below lists all available fasm-ant parameters.
     <td>No</td>
   </tr>
   <tr>
+    <td>excludes</td>
+    <td>comma- or space-separated list of files (may be specified using wildcard patterns)
+    that must be excluded; no files (except default excludes) are excluded when omitted</td>
+    <td>No</td>
+  </tr>
+  <tr>
     <td>failonerror</td>
     <td>indicates whether compilation errors will fail the build (default is true)</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>includes</td>
+    <td>comma- or space-separated list of files (may be specified using wildcard patterns)
+    that must be included; all .asm files are included when omitted</td>
     <td>No</td>
   </tr>
   <tr>
@@ -75,12 +87,17 @@ below lists all available fasm-ant parameters.
   </tr>
   <tr>
     <td>updatedproperty</td>
-    <td>the property to set (to the value "true") if compilation has taken place and has been successful</td>
+    <td>the property to set (to the value "true") if compilation has taken place and has
+    been successful</td>
     <td>No</td>
   </tr>
 </table>
 
 ### Parameters specified as nested elements
+
+This task forms an implicit [FileSet](https://ant.apache.org/manual/Types/fileset.html)
+and supports most attributes of &lt;fileset&gt; (dir becomes srcdir) as well as the
+nested &lt;include&gt;, &lt;exclude&gt; and &lt;patternset&gt; elements.
 
 ##### compilerarg
 

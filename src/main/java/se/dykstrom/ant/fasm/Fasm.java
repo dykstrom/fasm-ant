@@ -19,6 +19,7 @@ package se.dykstrom.ant.fasm;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.MatchingTask;
+import org.apache.tools.ant.types.PatternSet;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,30 +35,20 @@ import static java.util.stream.Collectors.toMap;
 
 /**
  * Compiles an assembly code source tree using the <a href="http://flatassembler.net">flat assembler</a>.
- *
  * The source and destination directory will be recursively scanned for assembly source files to compile.
  * Only source files that have no corresponding output file, or where the output file is older than the
  * source file will be compiled.
  *
- * Parameters
- *
- * compiler        - the compiler command used to run the flat assembler (default is "fasm")
- * destdir         - the destination directory (default is same as source directory)
- * errorproperty   - the property to set (to the value "true") if compilation fails
- * failonerror     - indicates whether compilation errors will fail the build (default is true)
- * memory          - the limit in kilobytes for the memory available to the assembler
- * passes          - the maximum allowed number of passes
- * srcdir          - the source directory
- * updatedproperty - the property to set (to the value "true") if compilation has taken place and has been successful
- *
  * @author Johan Dykstrom
  */
-@SuppressWarnings("unused")
+@SuppressWarnings("unused,WeakerAccess")
 public class Fasm extends MatchingTask {
 
-    public static final String VERSION = "0.3.0";
+    private static final String VERSION = "0.3.0";
 
     private static final String FAIL_MSG = "Compile failed; see the compiler error output for details.";
+
+    private static final String DEFAULT_INCLUDES = "**/*.asm";
 
     // Task attributes
     private String compiler = "fasm";
@@ -77,6 +68,21 @@ public class Fasm extends MatchingTask {
 
     /** Set to true if any file has been updated (compiled). */
     private boolean updated;
+
+    /** Keeps track of any include(s) configurations. */
+    private boolean includeConfigured;
+
+    @Override
+    public void setIncludes(String includes) {
+        includeConfigured = true;
+        super.setIncludes(includes);
+    }
+
+    @Override
+    public PatternSet.NameEntry createInclude() {
+        includeConfigured = true;
+        return super.createInclude();
+    }
 
     /**
      * Sets the optional compiler attribute.
@@ -190,6 +196,9 @@ public class Fasm extends MatchingTask {
      * the source directory.
      */
     private List<String> getIncludedFiles(String srcDir) {
+        if (!includeConfigured) {
+            setIncludes(DEFAULT_INCLUDES);
+        }
         return Arrays.asList(getDirectoryScanner(new File(srcDir)).getIncludedFiles());
     }
 
