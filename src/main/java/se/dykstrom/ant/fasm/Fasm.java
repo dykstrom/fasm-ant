@@ -44,8 +44,6 @@ import static java.util.stream.Collectors.toMap;
 @SuppressWarnings("unused,WeakerAccess")
 public class Fasm extends MatchingTask {
 
-    private static final String VERSION = "0.3.0";
-
     private static final String FAIL_MSG = "Compile failed; see the compiler error output for details.";
 
     private static final String DEFAULT_INCLUDES = "**/*.asm";
@@ -157,7 +155,7 @@ public class Fasm extends MatchingTask {
         Map<Path, Path> map = includedFiles.stream().collect(toMap(this::toSrcPath, this::toDestPath));
 
         // Make sure all destination directories exist
-        map.values().stream().forEach(FileUtils::makeDirectory);
+        map.values().forEach(FileUtils::makeDirectory);
 
         // Find out the source files to compile, and compile them
         map.entrySet().stream()
@@ -268,12 +266,5 @@ public class Fasm extends MatchingTask {
      */
     private Stream<String> parseCompilerArg(CompilerArg compilerArg) {
         return Arrays.stream(compilerArg.getValue().split("\\s+"));
-    }
-
-    /**
-     * Displays class name and version on stdout.
-     */
-    public static void main(String[] args) {
-        System.out.println(Fasm.class.getSimpleName() + " " + VERSION);
     }
 }
