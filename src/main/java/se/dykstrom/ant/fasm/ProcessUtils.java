@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Johan Dykstrom
  */
+@SuppressWarnings("SameParameterValue")
 final class ProcessUtils {
 
     private ProcessUtils() { }
@@ -33,13 +34,13 @@ final class ProcessUtils {
     /**
      * Sets up and returns a new compile process the executes the given {@code command}.
      */
-    public static Process setUpProcess(String... command) throws IOException, InterruptedException {
+    static Process setUpProcess(String... command) throws IOException, InterruptedException {
         ProcessBuilder builder = new ProcessBuilder(command).redirectErrorStream(true);
         Process process = builder.start();
 
         // Wait for the process to start and then end
-        waitForStart(process, 1000, TimeUnit.MILLISECONDS);
-        waitForEnd(process, 1000, TimeUnit.MILLISECONDS);
+        waitForStart(process, 5000, TimeUnit.MILLISECONDS);
+        waitForEnd(process, 5000, TimeUnit.MILLISECONDS);
 
         // Return the already ended process
         return process;
@@ -48,7 +49,7 @@ final class ProcessUtils {
     /**
      * Tears down the given process.
      */
-    public static void tearDownProcess(Process process) {
+    static void tearDownProcess(Process process) {
         process.destroy();
     }
 
@@ -87,7 +88,7 @@ final class ProcessUtils {
      * @param process The process to read from.
      * @return The process output.
      */
-    public static String readOutput(Process process) {
+    static String readOutput(Process process) {
         StringBuilder builder = new StringBuilder();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {

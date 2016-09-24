@@ -21,7 +21,7 @@ package se.dykstrom.ant.fasm;
  *
  * @author Johan Dykstrom
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class CompilerArg {
 
     private String value;

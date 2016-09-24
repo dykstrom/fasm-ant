@@ -41,7 +41,7 @@ final class FileUtils {
      * @param destFile The destination file.
      * @return True if the source file needs recompilation.
      */
-    public static boolean needsRecompilation(Path srcFile, Path destFile) {
+    static boolean needsRecompilation(Path srcFile, Path destFile) {
         return Files.notExists(destFile) || isNewer(srcFile, destFile);
     }
 
@@ -54,7 +54,7 @@ final class FileUtils {
      * @return True if the first file is newer than the second file.
      * @throws BuildException If any of the files does not exist.
      */
-    public static boolean isNewer(Path file1, Path file2) {
+    static boolean isNewer(Path file1, Path file2) {
         try {
             return Files.getLastModifiedTime(file1).compareTo(Files.getLastModifiedTime(file2)) > 0;
         } catch (IOException e) {
@@ -68,7 +68,7 @@ final class FileUtils {
      * @param file The file to create a directory for.
      * @throws BuildException If the directory could not be created.
      */
-    public static void makeDirectory(Path file) {
+    static void makeDirectory(Path file) {
         Path directory = file.getParent();
 
         if (directory != null && Files.notExists(directory)) {
@@ -88,7 +88,7 @@ final class FileUtils {
      * @param srcFile The source file.
      * @return The destination file type, for example ".exe".
      */
-    public static String getDestFileType(Path srcFile) {
+    static String getDestFileType(Path srcFile) {
         try {
             Stream<String> lines = Files.lines(srcFile);
             String format = FormatUtils.getFormat(lines);
@@ -107,7 +107,7 @@ final class FileUtils {
      * @param destDirectory The destination directory.
      * @param destExtension The extension to use for the destination file.
      */
-    public static Path getDestPath(String srcFilename, Path destDirectory, String destExtension) {
+    static Path getDestPath(String srcFilename, Path destDirectory, String destExtension) {
         return destDirectory.resolve(getBasename(srcFilename) + destExtension);
     }
 
@@ -117,7 +117,7 @@ final class FileUtils {
      * @param filename The source filename.
      * @return The basename for the given filename.
      */
-    public static String getBasename(String filename) {
+    static String getBasename(String filename) {
         int index = filename.lastIndexOf(".");
         return index != -1 ? filename.substring(0, index) : filename;
     }

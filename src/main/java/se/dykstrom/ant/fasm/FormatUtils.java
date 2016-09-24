@@ -57,7 +57,7 @@ final class FormatUtils {
      * @param lines A stream of strings to parse, typically lines read from a source file.
      * @return The format directive found.
      */
-    public static String getFormat(Stream<String> lines) {
+    static String getFormat(Stream<String> lines) {
         return lines
                 .map(PATTERN_FORMAT::matcher)
                 .filter(Matcher::matches)
@@ -75,7 +75,7 @@ final class FormatUtils {
      * @param format The format to parse.
      * @return The file type, for example ".exe" or ".dll".
      */
-    public static String getFileType(String format) {
+    static String getFileType(String format) {
         Matcher matcher;
 
         matcher = PATTERN_BINARY_AS.matcher(format);
