@@ -17,21 +17,34 @@
 package se.dykstrom.ant.fasm;
 
 import org.apache.tools.ant.BuildException;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
 import static se.dykstrom.ant.fasm.FileUtils.*;
 
 public class TestFileUtils {
 
+    /** Time to sleep between creating the test files. */
+    private static long sleepTime = 10;
+
+    @BeforeClass
+    public static void setUpClass() {
+        // We need longer sleep time on Linux because the file modification time is given in seconds
+        if (Pattern.compile("[Ll]inux").matcher(System.getProperty("os.name")).find()) {
+            sleepTime = 1000;
+        }
+    }
+
     @Test
     public void testNeedsRecompilation() throws Exception {
-        Path[] paths = createTempFiles();
+        Path[] paths = createTempFiles(sleepTime);
 
         assertTrue(needsRecompilation(paths[1], paths[0]));
         assertFalse(needsRecompilation(paths[0], paths[1]));
@@ -39,14 +52,14 @@ public class TestFileUtils {
 
     @Test
     public void testNeedsRecompilation_NoDestFile() throws Exception {
-        Path[] paths = createTempFiles();
+        Path[] paths = createTempFiles(10);
 
         assertTrue(needsRecompilation(paths[0], Paths.get("does-not-exist.tmp")));
     }
 
     @Test
     public void testIsNewer() throws Exception {
-        Path[] paths = createTempFiles();
+        Path[] paths = createTempFiles(sleepTime);
 
         assertTrue(isNewer(paths[1], paths[0]));
         assertFalse(isNewer(paths[0], paths[1]));
@@ -90,13 +103,14 @@ public class TestFileUtils {
     /**
      * Creates two temp files with some milliseconds in between.
      *
+     * @param millis The number of milliseconds to sleep between creating the files.
      * @return An array of two file paths, where the first file is older , and the second file is newer.
      * @throws Exception If file creation failed.
      */
-    private static Path[] createTempFiles() throws Exception {
+    private static Path[] createTempFiles(long millis) throws Exception {
         Path[] paths = new Path[2];
         paths[0] = Files.createTempFile(null, null);
-        Thread.sleep(10);
+        Thread.sleep(millis);
         paths[1] = Files.createTempFile(null, null);
         Arrays.stream(paths).forEach(path -> path.toFile().deleteOnExit());
         return paths;

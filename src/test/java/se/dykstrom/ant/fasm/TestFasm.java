@@ -32,11 +32,11 @@ public class TestFasm {
     private static final String SRC_DIR = "src/test/asm";
     private static final String DEST_DIR = "target/test-binaries";
 
-    private static final String SRC_FILE = SRC_DIR + "/pe64_console.asm";
-    private static final String DEST_FILE = DEST_DIR + "/pe64_console.exe";
+    private static final String SRC_FILE = "elf.asm";
+    private static final String DEST_FILE = "elf.o";
 
-    private static final Path SRC_PATH = Paths.get(SRC_FILE);
-    private static final Path DEST_PATH = Paths.get(DEST_FILE);
+    private static final Path SRC_PATH = Paths.get(SRC_DIR + "/" + SRC_FILE);
+    private static final Path DEST_PATH = Paths.get(DEST_DIR + "/" + DEST_FILE);
 
     private static final String ERROR_PROPERTY = "error";
     private static final String UPDATED_PROPERTY = "updated";
@@ -68,6 +68,9 @@ public class TestFasm {
         // Remove destination file to force a recompile
         Files.deleteIfExists(DEST_PATH);
 
+        // Include only the source file
+        fasm.setIncludes(SRC_FILE);
+
         // Test
         fasm.execute();
 
@@ -80,6 +83,9 @@ public class TestFasm {
         // Reset
         createProjectAndTask();
 
+        // Include only the source file
+        fasm.setIncludes(SRC_FILE);
+
         // Test again without removing destination file
         fasm.execute();
 
@@ -89,7 +95,7 @@ public class TestFasm {
     }
 
     @Test
-    public void testExecute_Includes() throws Exception {
+    public void testExecute_NonExistingFile() throws Exception {
         // Remove destination file to force a recompile
         Files.deleteIfExists(DEST_PATH);
 
