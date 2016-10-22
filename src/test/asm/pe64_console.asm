@@ -13,7 +13,7 @@ import msvcrt,\
 
 section '.data' data readable writeable
 
-   msg db "Hello, world!",10,13,0
+   msg db "Hello, world!",10,0
 
 section '.code' code readable executable
 

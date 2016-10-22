@@ -8,8 +8,8 @@ course built with ~~Ant~~ Maven itself.
 
 ### System requirements
 
-You need Java 8 and Ant 1.7 or later to use fasm-ant. It has only been tested on Windows, but
-with Java's old promise "write once, run anywhere" it might just work on Linux as well. :-)
+You need Java 8 and Ant 1.7 or later to use fasm-ant. Tested on Windows 7, Windows 10, and 
+Ubuntu Linux.
 
 ### Installation
 
