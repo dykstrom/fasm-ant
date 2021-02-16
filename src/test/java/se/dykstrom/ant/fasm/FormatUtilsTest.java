@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Johan Dykstrom
+ * Copyright 2016-2021 Johan Dykstrom
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import static org.junit.Assert.assertEquals;
 import static se.dykstrom.ant.fasm.FormatUtils.getFileType;
 import static se.dykstrom.ant.fasm.FormatUtils.getFormat;
 
-public class TestFormatUtils {
+public class FormatUtilsTest {
 
     @Test
     public void testGetFormat() {

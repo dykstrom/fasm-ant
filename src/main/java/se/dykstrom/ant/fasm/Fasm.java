@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Johan Dykstrom
+ * Copyright 2016-2021 Johan Dykstrom
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -257,7 +257,7 @@ public class Fasm extends MatchingTask {
         compilerArgs.stream().flatMap(this::parseCompilerArg).forEach(args::add);
         args.add(srcFile);
         args.add(destFile);
-        return args.toArray(new String[args.size()]);
+        return args.toArray(new String[0]);
     }
 
     /**

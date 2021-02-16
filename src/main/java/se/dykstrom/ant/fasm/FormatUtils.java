@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Johan Dykstrom
+ * Copyright 2016-2021 Johan Dykstrom
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,8 +41,8 @@ final class FormatUtils {
 
     private static final String TYPE_BIN = ".bin";
     private static final String TYPE_DLL = ".dll";
-    private static final String TYPE_EXE = ".exe";
     private static final String TYPE_EMPTY = "";
+    private static final String TYPE_EXE = ".exe";
     private static final String TYPE_O = ".o";
     private static final String TYPE_OBJ = ".obj";
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Johan Dykstrom
+ * Copyright 2016-2021 Johan Dykstrom
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Johan Dykstrom
  */
-@SuppressWarnings("SameParameterValue")
 final class ProcessUtils {
 
     private ProcessUtils() { }
@@ -39,8 +38,7 @@ final class ProcessUtils {
         Process process = builder.start();
 
         // Wait for the process to start and then end
-        waitForStart(process, 5000, TimeUnit.MILLISECONDS);
-        waitForEnd(process, 5000, TimeUnit.MILLISECONDS);
+        process.waitFor(10, TimeUnit.SECONDS);
 
         // Return the already ended process
         return process;
@@ -51,35 +49,6 @@ final class ProcessUtils {
      */
     static void tearDownProcess(Process process) {
         process.destroy();
-    }
-
-    /**
-     * Causes the current thread to wait, if necessary, until the sub process represented by {@code process} has
-     * started, or the specified waiting time elapses. If the sub process has already started, this method returns
-     * immediately.
-     *
-     * @param process The process to wait for.
-     * @param timeout The maximum wait time.
-     * @param unit The time unit of the timeout argument.
-     * @throws InterruptedException If the current thread is interrupted while waiting.
-     * @throws IOException If an IO error occurs.
-     * @see Process#waitFor(long, TimeUnit)
-     */
-    private static void waitForStart(Process process, long timeout, TimeUnit unit) throws InterruptedException, IOException {
-        long start = System.nanoTime();
-        long remaining = unit.toNanos(timeout);
-
-        while (process.getInputStream().available() == 0 && remaining > 0) {
-            Thread.sleep(Math.min(TimeUnit.NANOSECONDS.toMillis(remaining) + 1, 10));
-            remaining = unit.toNanos(timeout) - (System.nanoTime() - start);
-        }
-    }
-
-    /**
-     * The same as calling {@link Process#waitFor(long, TimeUnit)}.
-     */
-    private static void waitForEnd(Process process, long timeout, TimeUnit unit) throws InterruptedException {
-        process.waitFor(timeout, unit);
     }
 
     /**

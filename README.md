@@ -8,12 +8,15 @@ course built with ~~Ant~~ Maven itself.
 
 ### System requirements
 
-You need Java 8 and Ant 1.7 or later to use fasm-ant. Tested on Windows 7, Windows 10, and 
-Ubuntu Linux.
+*Minimum:* Java 8 and Ant 1.7.1.  
+*Recommended:* Java 11 and Ant 1.10.9.
+
+Tested on Windows 10 and Ubuntu Linux.
 
 ### Installation
 
-Download the latest fasm-ant jar file and drop it in your Ant lib directory. That's it!
+Download the latest zip file from the GitHub [releases page](https://github.com/dykstrom/fasm-ant/releases),
+unzip it, and copy the jar file to your Ant lib directory. That's it!
 
 ### Configuration
 
@@ -34,9 +37,9 @@ below lists all available fasm-ant parameters.
 
 <table>
   <tr>
-    <th align="left">Attribute</th>
-    <th align="left">Description</th>
-    <th align="left">Required</th>
+    <th style="text-align: left">Attribute</th>
+    <th style="text-align: left">Description</th>
+    <th style="text-align: left">Required</th>
   </tr>
   <tr>
     <td>compiler</td>
@@ -107,9 +110,9 @@ attribute.
 
 <table>
   <tr>
-    <th align="left">Attribute</th>
-    <th align="left">Description</th>
-    <th align="left">Required</th>
+    <th style="text-align: left">Attribute</th>
+    <th style="text-align: left">Description</th>
+    <th style="text-align: left">Required</th>
   </tr>
   <tr>
     <td>value</td>

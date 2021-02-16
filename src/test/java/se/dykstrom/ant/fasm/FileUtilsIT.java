@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Johan Dykstrom
+ * Copyright 2016-2021 Johan Dykstrom
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 import static org.junit.Assert.*;
 import static se.dykstrom.ant.fasm.FileUtils.*;
 
-public class TestFileUtils {
+public class FileUtilsIT {
 
     /** Time to sleep between creating the test files. */
     private static long sleepTime = 10;
@@ -67,7 +67,7 @@ public class TestFileUtils {
     }
 
     @Test(expected = BuildException.class)
-    public void testIsNewer_Exception() throws Exception {
+    public void testIsNewer_Exception() {
         isNewer(Paths.get("does-not-exist.tmp"), Paths.get("does-not-exist.tmp"));
     }
 
@@ -75,6 +75,7 @@ public class TestFileUtils {
     public void testGetDestFileType() {
         assertEquals(".exe", FileUtils.getDestFileType(Paths.get("src/test/asm/pe64_console.asm")));
         assertEquals(".obj", FileUtils.getDestFileType(Paths.get("src/test/asm/coff.asm")));
+        assertEquals("", FileUtils.getDestFileType(Paths.get("src/test/asm/elf64_executable.asm")));
     }
 
     @Test(expected = BuildException.class)
@@ -86,16 +87,7 @@ public class TestFileUtils {
     public void testGetDestPath() {
         assertEquals(Paths.get("c:/Files/out/file.exe"), getDestPath("file.asm", Paths.get("c:/Files/out"), ".exe"));
         assertEquals(Paths.get("c:/Files/out/sub/file.exe"), getDestPath("sub/file.asm", Paths.get("c:/Files/out"), ".exe"));
-    }
-
-    @Test
-    public void testGetBasename() {
-        assertEquals("file", getBasename("file.asm"));
-        assertEquals("file", getBasename("file"));
-        assertEquals("c:/Temp/file", getBasename("c:/Temp/file.asm"));
-        assertEquals("c:/Temp/file", getBasename("c:/Temp/file"));
-        assertEquals("C:\\Temp\\file", getBasename("C:\\Temp\\file.asm"));
-        assertEquals("C:\\Temp\\file", getBasename("C:\\Temp\\file"));
+        assertEquals(Paths.get("/usr/home/Files/out/sub/file"), getDestPath("sub/file.asm", Paths.get("/usr/home/Files/out"), ""));
     }
 
     // -----------------------------------------------------------------------
