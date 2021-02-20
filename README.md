@@ -1,3 +1,11 @@
+<div style="text-align: center">
+
+[![Build Status](https://travis-ci.com/dykstrom/fasm-ant.svg?branch=master)](https://travis-ci.com/dykstrom/fasm-ant)
+![GitHub all releases](https://img.shields.io/github/downloads/dykstrom/fasm-ant/total)
+![GitHub](https://img.shields.io/github/license/dykstrom/fasm-ant)
+
+</div>
+
 # fasm-ant
 
 Project fasm-ant is a custom Ant task for building [flat assembler](http://flatassembler.net)
